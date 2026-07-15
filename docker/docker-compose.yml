@@ -1,0 +1,29 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+
+    ports:
+      - "8080:80"
+
+    restart: unless-stopped
+
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:11
+
+    container_name: mariadb
+
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: gpudb
+
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:
